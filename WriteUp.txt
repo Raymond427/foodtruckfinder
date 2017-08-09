@@ -1,0 +1,12 @@
+One of the first things I would do to make this ready for production is to write unit tests.
+I would test first that the dependencies that I'm using are successfully being imported and are accessible by my local code.
+I would then test the GET request that I'm sending to the API.
+I would write a test that verifies that the request is successfully receiving data from the API, writing a version of a typical request and assert that I recieve a 200 status code.
+Then, I would verify that the error handling I implemented properly catches any request issues, instead of calling the API, I would create a mock that gives the test a 300, 400 and 500 status code to verify the error messages are working.
+Next, testing the filtering by creating mock JSON and asserting how the JSON should be structured after the function is called would ensure that the filtering works, verifying that the resulting JSON only contains currently open trucks and that length of the JSON is at least 10.
+
+The best way to make a production version of this would be to turn it into a Nodejs API and putting it in a cloud as a SaaS application for people to use.
+For an API the unit tests would suffice, but to create a version that customers could use directly would require a front end.
+If this were the only feature of the app, I would probably just turn the code into an AJAX request and attach it to an HTML and CSS file, but it this were a feature for a larger application that receives very high traffic, I would optimize performance by storing the results of the API call every few hours or so in a database instead of constantly polling the API and boosting their server's traffic.
+In the app, I would create a cache that stored the currently opened trucks and I would replace the cache with a new API call every thirty minutes, since the trucks open and close on thirty minute intervals (9:00AM, 9:30AM, 10:00AM etc.).
+This way I will only call the API when needed and not when every user opens the app, this will make a faster user experience, since I will be displaying the local cache on screen, and it will ease the traffic on the data.sfgov server as well.
